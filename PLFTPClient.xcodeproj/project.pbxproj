@@ -1,0 +1,399 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		51BB4BFA21513FED0024A318 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4BF921513FED0024A318 /* AppDelegate.m */; };
+		51BB4BFD21513FED0024A318 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4BFC21513FED0024A318 /* ViewController.m */; };
+		51BB4C0021513FED0024A318 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51BB4BFE21513FED0024A318 /* Main.storyboard */; };
+		51BB4C0221513FEE0024A318 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51BB4C0121513FEE0024A318 /* Assets.xcassets */; };
+		51BB4C0521513FEE0024A318 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51BB4C0321513FEE0024A318 /* LaunchScreen.storyboard */; };
+		51BB4C0821513FEE0024A318 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4C0721513FEE0024A318 /* main.m */; };
+		51BB4C17215141410024A318 /* Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = 51BB4C11215141410024A318 /* Documentation.html */; };
+		51BB4C18215141410024A318 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4C12215141410024A318 /* GCDAsyncUdpSocket.m */; };
+		51BB4C19215141410024A318 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4C13215141410024A318 /* GCDAsyncSocket.m */; };
+		51BB4C1C215141560024A318 /* PLFTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4C1B215141560024A318 /* PLFTPClient.m */; };
+		51BB4C1F215149930024A318 /* NSData+PLCSTR.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4C1E215149930024A318 /* NSData+PLCSTR.m */; };
+		51BB4C2221514A5E0024A318 /* PLFTPLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4C2121514A5E0024A318 /* PLFTPLog.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		51BB4BF521513FED0024A318 /* PLFTPClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLFTPClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		51BB4BF821513FED0024A318 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		51BB4BF921513FED0024A318 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		51BB4BFB21513FED0024A318 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		51BB4BFC21513FED0024A318 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		51BB4BFF21513FED0024A318 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		51BB4C0121513FEE0024A318 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		51BB4C0421513FEE0024A318 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		51BB4C0621513FEE0024A318 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51BB4C0721513FEE0024A318 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		51BB4C11215141410024A318 /* Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Documentation.html; sourceTree = "<group>"; };
+		51BB4C12215141410024A318 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		51BB4C13215141410024A318 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		51BB4C14215141410024A318 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		51BB4C15215141410024A318 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		51BB4C1A215141560024A318 /* PLFTPClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFTPClient.h; sourceTree = "<group>"; };
+		51BB4C1B215141560024A318 /* PLFTPClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLFTPClient.m; sourceTree = "<group>"; };
+		51BB4C1D215149930024A318 /* NSData+PLCSTR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+PLCSTR.h"; sourceTree = "<group>"; };
+		51BB4C1E215149930024A318 /* NSData+PLCSTR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+PLCSTR.m"; sourceTree = "<group>"; };
+		51BB4C2021514A5E0024A318 /* PLFTPLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFTPLog.h; sourceTree = "<group>"; };
+		51BB4C2121514A5E0024A318 /* PLFTPLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLFTPLog.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		51BB4BF221513FED0024A318 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		51BB4BEC21513FED0024A318 = {
+			isa = PBXGroup;
+			children = (
+				51BB4C0E215141410024A318 /* Source */,
+				51BB4BF721513FED0024A318 /* PLFTPClient */,
+				51BB4BF621513FED0024A318 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		51BB4BF621513FED0024A318 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				51BB4BF521513FED0024A318 /* PLFTPClient.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		51BB4BF721513FED0024A318 /* PLFTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				51BB4BF821513FED0024A318 /* AppDelegate.h */,
+				51BB4BF921513FED0024A318 /* AppDelegate.m */,
+				51BB4BFB21513FED0024A318 /* ViewController.h */,
+				51BB4BFC21513FED0024A318 /* ViewController.m */,
+				51BB4BFE21513FED0024A318 /* Main.storyboard */,
+				51BB4C0121513FEE0024A318 /* Assets.xcassets */,
+				51BB4C0321513FEE0024A318 /* LaunchScreen.storyboard */,
+				51BB4C0621513FEE0024A318 /* Info.plist */,
+				51BB4C0721513FEE0024A318 /* main.m */,
+			);
+			path = PLFTPClient;
+			sourceTree = "<group>";
+		};
+		51BB4C0E215141410024A318 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				51BB4C0F215141410024A318 /* CocoaAsyncSocket */,
+				51BB4C1A215141560024A318 /* PLFTPClient.h */,
+				51BB4C1B215141560024A318 /* PLFTPClient.m */,
+				51BB4C2021514A5E0024A318 /* PLFTPLog.h */,
+				51BB4C2121514A5E0024A318 /* PLFTPLog.m */,
+				51BB4C1D215149930024A318 /* NSData+PLCSTR.h */,
+				51BB4C1E215149930024A318 /* NSData+PLCSTR.m */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		51BB4C0F215141410024A318 /* CocoaAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				51BB4C10215141410024A318 /* GCD */,
+			);
+			path = CocoaAsyncSocket;
+			sourceTree = "<group>";
+		};
+		51BB4C10215141410024A318 /* GCD */ = {
+			isa = PBXGroup;
+			children = (
+				51BB4C11215141410024A318 /* Documentation.html */,
+				51BB4C12215141410024A318 /* GCDAsyncUdpSocket.m */,
+				51BB4C13215141410024A318 /* GCDAsyncSocket.m */,
+				51BB4C14215141410024A318 /* GCDAsyncUdpSocket.h */,
+				51BB4C15215141410024A318 /* GCDAsyncSocket.h */,
+			);
+			path = GCD;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		51BB4BF421513FED0024A318 /* PLFTPClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51BB4C0B21513FEE0024A318 /* Build configuration list for PBXNativeTarget "PLFTPClient" */;
+			buildPhases = (
+				51BB4BF121513FED0024A318 /* Sources */,
+				51BB4BF221513FED0024A318 /* Frameworks */,
+				51BB4BF321513FED0024A318 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PLFTPClient;
+			productName = PLFTPClient;
+			productReference = 51BB4BF521513FED0024A318 /* PLFTPClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		51BB4BED21513FED0024A318 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = PL;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = Plumk;
+				TargetAttributes = {
+					51BB4BF421513FED0024A318 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 51BB4BF021513FED0024A318 /* Build configuration list for PBXProject "PLFTPClient" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 51BB4BEC21513FED0024A318;
+			productRefGroup = 51BB4BF621513FED0024A318 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				51BB4BF421513FED0024A318 /* PLFTPClient */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		51BB4BF321513FED0024A318 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51BB4C0521513FEE0024A318 /* LaunchScreen.storyboard in Resources */,
+				51BB4C0221513FEE0024A318 /* Assets.xcassets in Resources */,
+				51BB4C0021513FED0024A318 /* Main.storyboard in Resources */,
+				51BB4C17215141410024A318 /* Documentation.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		51BB4BF121513FED0024A318 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51BB4C18215141410024A318 /* GCDAsyncUdpSocket.m in Sources */,
+				51BB4C1C215141560024A318 /* PLFTPClient.m in Sources */,
+				51BB4C19215141410024A318 /* GCDAsyncSocket.m in Sources */,
+				51BB4BFD21513FED0024A318 /* ViewController.m in Sources */,
+				51BB4C0821513FEE0024A318 /* main.m in Sources */,
+				51BB4C2221514A5E0024A318 /* PLFTPLog.m in Sources */,
+				51BB4BFA21513FED0024A318 /* AppDelegate.m in Sources */,
+				51BB4C1F215149930024A318 /* NSData+PLCSTR.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		51BB4BFE21513FED0024A318 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51BB4BFF21513FED0024A318 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		51BB4C0321513FEE0024A318 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				51BB4C0421513FEE0024A318 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		51BB4C0921513FEE0024A318 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		51BB4C0A21513FEE0024A318 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		51BB4C0C21513FEE0024A318 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5QY2MC95W4;
+				INFOPLIST_FILE = PLFTPClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.plumk.PLFTPClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		51BB4C0D21513FEE0024A318 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5QY2MC95W4;
+				INFOPLIST_FILE = PLFTPClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.plumk.PLFTPClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		51BB4BF021513FED0024A318 /* Build configuration list for PBXProject "PLFTPClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51BB4C0921513FEE0024A318 /* Debug */,
+				51BB4C0A21513FEE0024A318 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51BB4C0B21513FEE0024A318 /* Build configuration list for PBXNativeTarget "PLFTPClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51BB4C0C21513FEE0024A318 /* Debug */,
+				51BB4C0D21513FEE0024A318 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 51BB4BED21513FED0024A318 /* Project object */;
+}
