@@ -92,7 +92,7 @@ isLogined = _isLogined;
         case 227:
             break;
         case 230:
-//            [self sendCommand:@"PASV" content:nil];
+            [self sendCommand:@"PASV" content:nil];
             break;
             
         case 331:
