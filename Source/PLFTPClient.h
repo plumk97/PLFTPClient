@@ -20,11 +20,14 @@
 @property (nonatomic, weak) id <PLFTPClientDelegate> delegate;
 
 // MARK: - Connect
+@property (nonatomic, readonly) NSString * host;
+/** 服务器编码 */
+@property (nonatomic, readonly) NSString * serverEncoding;
 - (void)connectToHost:(NSString *)host port:(NSUInteger)port error:(NSError **)error;
 
-
-// MARK: - Comm
+// MARK: - Commands
 - (void)sendCommand:(NSString *)command content:(NSString *)content;
+
 
 @end
 
@@ -32,7 +35,8 @@
 @protocol PLFTPClientDelegate <NSObject>
 @optional
 
-- (void)ftpclient:(PLFTPClient *)client;
+- (void)ftpclientDisconnect:(PLFTPClient *)client withError:(NSError *)error;
+- (void)ftpclient:(PLFTPClient *)client didConnectToHost:(NSString *)host port:(uint16_t)port;
 
-
+- (void)ftpclient:(PLFTPClient *)client loginIsSucceed:(BOOL)isSucceed statusCode:(NSInteger)statusCode;
 @end
