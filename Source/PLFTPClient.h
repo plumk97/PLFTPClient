@@ -28,7 +28,6 @@
 // MARK: - Commands
 - (void)sendCommand:(NSString *)command content:(NSString *)content;
 
-
 @end
 
 

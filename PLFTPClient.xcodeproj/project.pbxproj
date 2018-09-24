@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		51AFEEBF2156A524007C7E3B /* PLFTPClientDataTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 51AFEEBE2156A524007C7E3B /* PLFTPClientDataTransfer.m */; };
 		51BB4BFA21513FED0024A318 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4BF921513FED0024A318 /* AppDelegate.m */; };
 		51BB4BFD21513FED0024A318 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB4BFC21513FED0024A318 /* ViewController.m */; };
 		51BB4C0021513FED0024A318 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51BB4BFE21513FED0024A318 /* Main.storyboard */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		51AFEEBD2156A524007C7E3B /* PLFTPClientDataTransfer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFTPClientDataTransfer.h; sourceTree = "<group>"; };
+		51AFEEBE2156A524007C7E3B /* PLFTPClientDataTransfer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLFTPClientDataTransfer.m; sourceTree = "<group>"; };
 		51BB4BF521513FED0024A318 /* PLFTPClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLFTPClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51BB4BF821513FED0024A318 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		51BB4BF921513FED0024A318 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -95,6 +98,8 @@
 				51BB4C0F215141410024A318 /* CocoaAsyncSocket */,
 				51BB4C1A215141560024A318 /* PLFTPClient.h */,
 				51BB4C1B215141560024A318 /* PLFTPClient.m */,
+				51AFEEBD2156A524007C7E3B /* PLFTPClientDataTransfer.h */,
+				51AFEEBE2156A524007C7E3B /* PLFTPClientDataTransfer.m */,
 				51BB4C2021514A5E0024A318 /* PLFTPLog.h */,
 				51BB4C2121514A5E0024A318 /* PLFTPLog.m */,
 				51BB4C1D215149930024A318 /* NSData+PLCSTR.h */,
@@ -199,6 +204,7 @@
 				51BB4C1C215141560024A318 /* PLFTPClient.m in Sources */,
 				51BB4C19215141410024A318 /* GCDAsyncSocket.m in Sources */,
 				51BB4BFD21513FED0024A318 /* ViewController.m in Sources */,
+				51AFEEBF2156A524007C7E3B /* PLFTPClientDataTransfer.m in Sources */,
 				51BB4C0821513FEE0024A318 /* main.m in Sources */,
 				51BB4C2221514A5E0024A318 /* PLFTPLog.m in Sources */,
 				51BB4BFA21513FED0024A318 /* AppDelegate.m in Sources */,

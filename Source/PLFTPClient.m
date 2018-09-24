@@ -7,21 +7,21 @@
 //
 
 #import "PLFTPClient.h"
-#import "GCDAsyncSocket.h"
-#import "NSData+PLCSTR.h"
+#import "PLFTPClientDataTransfer.h"
 #import "PLFTPLog.h"
 
+#import "GCDAsyncSocket.h"
+#import "NSData+PLCSTR.h"
+
 @interface PLFTPClient () <GCDAsyncSocketDelegate> {
-    
     dispatch_queue_t _commSocketQueue;
-    dispatch_queue_t _dataSocketQueue;
 }
 
 @property (nonatomic, strong) GCDAsyncSocket * commSocket;
-@property (nonatomic, strong) GCDAsyncSocket * dataSocket;
 
 @property (nonatomic, assign) BOOL isWaitResponse;
 @property (nonatomic, strong) NSMutableArray <NSString *> * commandQueues;
+@property (nonatomic, strong) NSMutableArray <PLFTPClientDataTransfer *> * dataTransfers;
 @end
 
 @implementation PLFTPClient
@@ -29,17 +29,18 @@
 username = _username,
 password = _password,
 isLogined = _isLogined;
+
 - (instancetype)initWithUsername:(NSString *)username password:(NSString *)password {
     self = [self init];
     if (self) {
         
         _commSocketQueue = dispatch_queue_create("PLFTPClient_COMM", DISPATCH_QUEUE_SERIAL);
-        _dataSocketQueue = dispatch_queue_create("PLFTPClient_DATA", DISPATCH_QUEUE_SERIAL);
         
         _username = username;
         _password = password;
         
         _commandQueues = [[NSMutableArray alloc] init];
+        _dataTransfers = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -52,19 +53,10 @@ isLogined = _isLogined;
     [self.commSocket connectToHost:host onPort:port withTimeout:10 error:error];
 }
 
-- (void)connectDataSocketWithPort:(NSUInteger)port {
-    self.dataSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:_dataSocketQueue];
-    NSError * error = nil;
-    [self.dataSocket connectToHost:self.host onPort:port error:&error];
-    if (error) {
-        PLFTPLog(@"%@", error);
-    }
-}
 
 // MARK: - Commands
 - (void)sendCommand:(NSString *)command content:(NSString *)content {
     if (self.commSocket.isConnected) {
-        
         
         NSString * compleCommand = nil;
         if (content == nil) {
@@ -83,6 +75,7 @@ isLogined = _isLogined;
     
     NSString * command = [self.commandQueues firstObject];
     if (command) {
+        PLFTPLog(@"send: %@", command);
         self.isWaitResponse = YES;
         [self.commSocket writeData:[command dataUsingEncoding:NSUTF8StringEncoding] withTimeout:10 tag:0];
     }
@@ -121,8 +114,6 @@ isLogined = _isLogined;
     PLFTPLog(@"%@", [data string]);
     if (sock == self.commSocket) {
         [self handleCommResponseData:data];
-    } else {
-        [self handleDataResponseData:data];
     }
     [sock readDataWithTimeout:-1 tag:tag + 1];
 }
@@ -134,6 +125,7 @@ isLogined = _isLogined;
     }
     
     [self nextCommand];
+    NSString * command = [self.commandQueues firstObject];
     
     NSInteger code = [[responseStr substringToIndex:3] integerValue];
     NSString * content = [responseStr substringFromIndex:4];
@@ -150,7 +142,19 @@ isLogined = _isLogined;
                 NSArray * parts = [ipaddr componentsSeparatedByString:@","];
                 
                 NSUInteger port = [[parts objectAtIndex:parts.count - 2] integerValue] * 256 + [[parts objectAtIndex:parts.count - 1] integerValue];
-                [self connectDataSocketWithPort:port];
+                
+                PLFTPClientDataTransfer * transfer = [[PLFTPClientDataTransfer alloc] initWithHost:self.host pasvPort:port transferType:PLFTPDataTransferType_MLSD];
+                [transfer setCompleteBlock:^(NSError *error, NSData *data) {
+                    if (error.code == 7) {
+                        // 服务器主动断开 代表数据传输完成
+                        PLFTPLog(@"%@", command);
+                        PLFTPLog(@"%@", [data string]);
+                    } else {
+                        PLFTPLog(@"%@", error);
+                    }
+                }];
+                [transfer startTransfer];
+                [self.dataTransfers addObject:transfer];
             }
         }
             break;
@@ -166,7 +170,6 @@ isLogined = _isLogined;
         case 331:
             [self sendCommand:@"PASS" content:self.password];
             break;
-            
             
         case 530: {
             if (self.delegate && [self.delegate respondsToSelector:@selector(ftpclient:loginIsSucceed:statusCode:)]) {

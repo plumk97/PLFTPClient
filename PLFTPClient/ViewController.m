@@ -23,7 +23,7 @@
     self.ftpclient.delegate = self;
     
     NSError * error;
-    [self.ftpclient connectToHost:@"127.0.0.1" port:2121 error:&error];
+    [self.ftpclient connectToHost:@"127.0.0.1" port:5521 error:&error];
     NSLog(@"%@", error);
 }
 
