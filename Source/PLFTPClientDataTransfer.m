@@ -15,6 +15,8 @@
 
 @property (nonatomic, strong) NSMutableData * mData;
 @property (nonatomic, strong) GCDAsyncSocket * sockt;
+
+@property (nonatomic, strong) NSFileHandle * fileHandle;
 @end
 
 @implementation PLFTPClientDataTransfer
@@ -48,7 +50,7 @@
     if (error) {
         _sockt = nil;
         if (self.completeBlock) {
-            self.completeBlock(error, nil);
+            self.completeBlock(error, nil, self);
         }
     }
 }
@@ -62,6 +64,23 @@
 // MARK: - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
     [sock readDataWithTimeout:-1 tag:0];
+    
+    if (self.sendFile && self.type == PLFTPDataTransferType_STOR) {
+        self.fileHandle = [NSFileHandle fileHandleForReadingAtPath:self.sendFile];
+        NSData * data = [self.fileHandle readDataOfLength:512];
+        [sock writeData:data withTimeout:20 tag:0];
+    }
+}
+
+- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
+    if (self.type == PLFTPDataTransferType_STOR) {
+        NSData * data = [self.fileHandle readDataOfLength:512];
+        if (data.length <= 0) {
+            [sock disconnect];
+            return;
+        }
+        [sock writeData:data withTimeout:20 tag:tag + 1];
+    }
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
@@ -71,7 +90,7 @@
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
     if (self.completeBlock) {
-        self.completeBlock(err, self.mData);
+        self.completeBlock(err, self.mData, self);
     }
 }
 
