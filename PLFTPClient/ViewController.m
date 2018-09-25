@@ -28,7 +28,7 @@
     NSLog(@"%@", error);
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.ftpclient CWD:@"110717-533"];
+    [self.ftpclient CWD:@"abcd"];
     [self.ftpclient STOR:@"/Users/litiezhu/Downloads/QQ_V6.5.0.dmg"];
     [self.ftpclient MLSD:nil];
 }
