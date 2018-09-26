@@ -28,8 +28,9 @@
     NSLog(@"%@", error);
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.ftpclient sendCommand:PLFTPClientEnumCommand_MLSD content:nil];
     [self.ftpclient sendCommand:PLFTPClientEnumCommand_CWD content:@"123"];
+    [self.ftpclient sendCommand:PLFTPClientEnumCommand_MLSD content:nil];
+    [self.ftpclient sendCommand:PLFTPClientEnumCommand_STOR content:@"/Users/AQY/Downloads/PP 下载/应用/Play Magnus - Chess/Payload/MWPlayMiOS.zip"];
     [self.ftpclient sendCommand:PLFTPClientEnumCommand_MLSD content:nil];
 }
 

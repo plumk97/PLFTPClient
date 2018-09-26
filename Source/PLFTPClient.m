@@ -159,6 +159,15 @@ isLogined = _isLogined;
 - (void)sendCommand:(PLFTPClientEnumCommand)command content:(NSString *)content {
     if (self.commSocket.isConnected) {
         
+        if (command == PLFTPClientEnumCommand_STOR) {
+            NSDictionary <NSFileAttributeKey, id> * attr = [[NSFileManager defaultManager] attributesOfItemAtPath:content error:nil];
+            
+            if ([[attr objectForKey:NSFileType] isEqualToString:NSFileTypeDirectory]) {
+                PLFTPLog(@"不支持上传目录");
+                return;
+            }
+        }
+        
         if (command == PLFTPClientEnumCommand_MLSD ||
             command == PLFTPClientEnumCommand_STOR) {
             [self sendCommand:PLFTPClientEnumCommand_PASV content:nil];
@@ -234,6 +243,7 @@ isLogined = _isLogined;
     switch (code) {
         // - 150 Opening data channel
         case 150:
+            [self.dataTransfer startTransfer];
             break;
         // - 200 CDUP successful.
         case 200:
@@ -273,18 +283,19 @@ isLogined = _isLogined;
                     break;
                 }
                 
-                PLFTPClientCommand * command = [self.commandQueues objectAtIndex:1];
+                PLFTPClientCommand * nextCommand = [self.commandQueues objectAtIndex:1];
                 
                 PLFTPDataTransferType transferType = PLFTPDataTransferType_MLSD;
-                if (command.command == PLFTPClientEnumCommand_MLSD) {
-                } else if (command.command == PLFTPClientEnumCommand_STOR) {
+                if (nextCommand.command == PLFTPClientEnumCommand_MLSD) {
+                    transferType = PLFTPDataTransferType_MLSD;
+                } else if (nextCommand.command == PLFTPClientEnumCommand_STOR) {
                     transferType = PLFTPDataTransferType_STOR;
                 }
                 
                 PLFTPClientDataTransfer * transfer = [[PLFTPClientDataTransfer alloc] initWithHost:self.host pasvPort:port transferType:transferType];
                 
                 if (transferType == PLFTPDataTransferType_STOR) {
-                    transfer.sendFile = command.content;
+                    transfer.sendFile = nextCommand.content;
                 }
                 
                 __weak __typeof(self) weakSelf = self;
@@ -310,10 +321,8 @@ isLogined = _isLogined;
                     [self nextCommand];
                 }];
                 self.dataTransfer = transfer;
-                [transfer startTransfer];
                 [self nextCommand];
                 isAutoNext = NO;
-                
             }
         }
             break;
