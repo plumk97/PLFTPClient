@@ -17,6 +17,7 @@
 @property (nonatomic, strong) GCDAsyncSocket * sockt;
 
 @property (nonatomic, strong) NSFileHandle * fileHandle;
+@property (nonatomic, assign) NSUInteger fileSize;
 @end
 
 @implementation PLFTPClientDataTransfer
@@ -67,13 +68,21 @@
     
     if (self.sendFile && self.type == PLFTPDataTransferType_STOR) {
         self.fileHandle = [NSFileHandle fileHandleForReadingAtPath:self.sendFile];
+        self.fileSize = [self.fileHandle seekToEndOfFile];
+        [self.fileHandle seekToFileOffset:0];
+        
         NSData * data = [self.fileHandle readDataOfLength:512];
         [sock writeData:data withTimeout:20 tag:0];
+        
     }
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
     if (self.type == PLFTPDataTransferType_STOR) {
+        if (self.progressBlock) {
+            self.progressBlock(MIN(1.0, [self.fileHandle offsetInFile] / (self.fileSize * 1.0)), self);
+        }
+        
         NSData * data = [self.fileHandle readDataOfLength:512];
         if (data.length <= 0) {
             [sock disconnect];

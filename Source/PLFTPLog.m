@@ -8,6 +8,7 @@
 
 #import "PLFTPLog.h"
 
+static NSUInteger logCount = 0;
 void PLFTPLog(NSString * format, ...) {
     
     va_list args;
@@ -15,5 +16,5 @@ void PLFTPLog(NSString * format, ...) {
     NSString * str = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
     
-    printf("FTPLog (%lu): \n%s\n", clock() / (CLOCKS_PER_SEC / 1000), [str UTF8String]);
+    printf("FTPLog (%lu): \n%s\n", logCount ++, [str UTF8String]);
 }

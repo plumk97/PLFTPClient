@@ -18,6 +18,8 @@ typedef NS_ENUM(NSInteger, PLFTPDataTransferType) {
 @property (nonatomic, readonly) NSString * host;
 @property (nonatomic, readonly) NSUInteger port;
 @property (nonatomic, readonly) PLFTPDataTransferType type;
+
+@property (nonatomic, copy) void (^progressBlock) (float progress, PLFTPClientDataTransfer * transfer);
 @property (nonatomic, copy) void (^completeBlock) (NSError * error, NSData * data, PLFTPClientDataTransfer * transfer);
     
 - (instancetype)initWithHost:(NSString *)host pasvPort:(NSUInteger)pasvPort transferType:(PLFTPDataTransferType)transferType;

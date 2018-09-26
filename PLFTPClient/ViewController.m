@@ -19,18 +19,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.ftpclient = [[PLFTPClient alloc] initWithUsername:@"admin" password:@""];
+    self.ftpclient = [[PLFTPClient alloc] initWithUsername:@"user" password:@"12345"];
     self.ftpclient.delegate = self;
     
     NSError * error;
-//    [self.ftpclient connectToHost:@"127.0.0.1" port:5521 error:&error];
-    [self.ftpclient connectToHost:@"192.168.3.3" port:21 error:&error];
+    [self.ftpclient connectToHost:@"127.0.0.1" port:2121 error:&error];
+//    [self.ftpclient connectToHost:@"192.168.3.3" port:21 error:&error];
     NSLog(@"%@", error);
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.ftpclient CWD:@"abcd"];
-    [self.ftpclient STOR:@"/Users/litiezhu/Downloads/QQ_V6.5.0.dmg"];
-    [self.ftpclient MLSD:nil];
+    [self.ftpclient sendCommand:PLFTPClientEnumCommand_MLSD content:nil];
+    [self.ftpclient sendCommand:PLFTPClientEnumCommand_CWD content:@"123"];
+    [self.ftpclient sendCommand:PLFTPClientEnumCommand_MLSD content:nil];
 }
 
 // MARK: - PLFTPClientDelegate
@@ -47,19 +47,29 @@
     NSLog(@"login: %d: %d", isSucceed, statusCode);
 }
 
-- (void)ftpclient:(PLFTPClient *)client transferredData:(NSData *)data transferType:(PLFTPDataTransferType)transferType {
+- (void)ftpclient:(PLFTPClient *)client completeCommand:(PLFTPClientCommand *)command {
+    NSLog(@"%@", command);
+}
+
+- (void)ftpclient:(PLFTPClient *)client transferingProgress:(float)progress transferType:(PLFTPDataTransferType)transferType {
+    printf("transfering: %f\n", progress);
+}
+
+- (void)ftpclient:(PLFTPClient *)client transferredData:(NSData *)data transferType:(PLFTPDataTransferType)transferType error:(NSError *)error {
     
+    if (error) {
+        NSLog(@"%@", error);
+    }
     switch (transferType) {
         case PLFTPDataTransferType_MLSD: {
             NSString * str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             PLFTPLog(@"%@", str);
-            
         }
             break;
         case PLFTPDataTransferType_STOR: {
             PLFTPLog(@"上传完成");
         }
-            
+            break;
         default:
             break;
     }
