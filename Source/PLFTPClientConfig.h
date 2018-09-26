@@ -45,4 +45,6 @@ typedef NS_ENUM(NSInteger, PLFTPClientEnumCommand) {
     PLFTPClientEnumCommand_STAT
 };
 
+#define PLFTPClientPerUploadSize 512
+
 #endif /* PLFTPClientConfig_h */

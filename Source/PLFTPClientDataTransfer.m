@@ -75,7 +75,7 @@
         self.fileSize = [self.fileHandle seekToEndOfFile];
         [self.fileHandle seekToFileOffset:0];
         
-        NSData * data = [self.fileHandle readDataOfLength:65535];
+        NSData * data = [self.fileHandle readDataOfLength:PLFTPClientPerUploadSize];
         [sock writeData:data withTimeout:20 tag:0];
         
     }
@@ -87,7 +87,7 @@
             self.progressBlock(MIN(1.0, [self.fileHandle offsetInFile] / (self.fileSize * 1.0)), self);
         }
         
-        NSData * data = [self.fileHandle readDataOfLength:65535];
+        NSData * data = [self.fileHandle readDataOfLength:PLFTPClientPerUploadSize];
         if (data.length <= 0) {
             [sock disconnect];
             return;

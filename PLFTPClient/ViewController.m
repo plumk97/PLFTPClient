@@ -19,17 +19,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.ftpclient = [[PLFTPClient alloc] initWithUsername:@"user" password:@"12345"];
+    self.ftpclient = [[PLFTPClient alloc] initWithUsername:@"ftpuser" password:@"123456"];
+//    self.ftpclient = [[PLFTPClient alloc] initWithUsername:@"user" password:@"12345"];
     self.ftpclient.delegate = self;
     
     NSError * error;
-    [self.ftpclient connectToHost:@"127.0.0.1" port:2121 error:&error];
-//    [self.ftpclient connectToHost:@"192.168.3.3" port:21 error:&error];
+    [self.ftpclient connectToHost:@"192.168.3.3" port:21 error:&error];
+//    [self.ftpclient connectToHost:@"127.0.0.1" port:5521 error:&error];
     NSLog(@"%@", error);
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.ftpclient sendCommand:PLFTPClientEnumCommand_RETR content:@"安安.ipa"];
+//    [self.ftpclient sendCommand:PLFTPClientEnumCommand_MLSD content:nil];
+//    [self.ftpclient sendCommand:PLFTPClientEnumCommand_RETR content:@"安安.ipa"];
 //    [self.ftpclient sendCommand:PLFTPClientEnumCommand_SIZE content:@"安安.ipa"];
+    [self.ftpclient sendCommand:PLFTPClientEnumCommand_STOR content:@"/Users/litiezhu/Downloads/测试.dmg"];
 }
 
 // MARK: - PLFTPClientDelegate

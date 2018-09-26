@@ -12,7 +12,7 @@
 #import "NSData+PLCSTR.h"
 
 @interface PLFTPClientCommand ()
-@property (nonatomic, copy) NSString * workDirectory;
+@property (nonatomic, weak) PLFTPClient * client;
 @end
 @implementation PLFTPClientCommand
 @synthesize command = _command;
@@ -44,7 +44,7 @@
         case PLFTPClientEnumCommand_OPTS:
             return @"OPTS";
         case PLFTPClientEnumCommand_MLSD:
-            return @"MLSD";
+            return self.client.isMicrosoftServer ? @"LIST" : @"MLSD";
         case PLFTPClientEnumCommand_CWD:
             return @"CWD";
         case PLFTPClientEnumCommand_CDUP:
@@ -78,7 +78,9 @@
     NSString * content = self.content;
     switch (self.command) {
         case PLFTPClientEnumCommand_MLSD:
-            content = self.workDirectory ? self.workDirectory : @"/";
+            if (content == nil) {
+                content = self.client.currentDirectory ? self.client.currentDirectory : @"/";
+            }
             break;
         case PLFTPClientEnumCommand_STOR:
             content = [content lastPathComponent];
@@ -153,7 +155,7 @@ isLogined = _isLogined;
 // MARK: - Commands
 @synthesize currentDirectory = _currentDirectory;
 @synthesize fileSize = _fileSize;
-
+@synthesize isMicrosoftServer = _isMicrosoftServer;
 /**
  发送FTP 命令
  
@@ -189,7 +191,7 @@ isLogined = _isLogined;
     
     PLFTPClientCommand * command = [self.commandQueues firstObject];
     if (command) {
-        command.workDirectory = self.currentDirectory;
+        command.client = self;
         NSString * compleCommand = [command makeCompleteCommandString];
         if (compleCommand) {
             PLFTPLog(@"send: %@", compleCommand);
@@ -253,6 +255,16 @@ isLogined = _isLogined;
         // - 200 CDUP successful.
         case 200:
             _currentDirectory = [self fetchPathWithContent:content];
+            break;
+        /**
+         211-Microsoft FTP Service status:
+         Logged in user: ftpuser
+         TYPE: BINARY; FORM: NONPRINT; STRUcture: FILE; transfer MODE: STREAM
+         Data connection: none
+         211 End of status.
+         */
+        case 211:
+            _isMicrosoftServer = [content rangeOfString:@"Microsoft FTP"].length > 0;
             break;
         // - 213 89408779 ::文件大小
         case 213: {
@@ -328,6 +340,7 @@ isLogined = _isLogined;
         case 230: {
             [self sendCommand:PLFTPClientEnumCommand_OPTS content:@"UTF8 ON"];
             [self sendCommand:PLFTPClientEnumCommand_TYPE content:@"I"];
+            [self sendCommand:PLFTPClientEnumCommand_STAT content:nil];
             if (self.delegate && [self.delegate respondsToSelector:@selector(ftpclient:loginIsSucceed:statusCode:)]) {
                 [self.delegate ftpclient:self loginIsSucceed:YES statusCode:code];
             }

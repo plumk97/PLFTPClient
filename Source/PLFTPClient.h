@@ -54,6 +54,8 @@
 @property (readonly) NSString * currentDirectory;
 /** 记录最后一次文件大小 */
 @property (readonly) NSUInteger fileSize;
+/** 是否是 Microsoft FTP */
+@property (readonly) BOOL isMicrosoftServer;
 
 /**
  发送FTP 命令
