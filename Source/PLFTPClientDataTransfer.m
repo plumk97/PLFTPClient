@@ -67,7 +67,7 @@
     [sock readDataWithTimeout:-1 tag:0];
     
     if (self.sendFile && self.type == PLFTPDataTransferType_STOR) {
-        self.fileHandle = [NSFileHandle fileHandleForReadingAtPath:@"/Users/AQY/Downloads/PP 下载/应用/Play Magnus - Chess/Payload/MWPlayMiOS.zip"];
+        self.fileHandle = [NSFileHandle fileHandleForReadingAtPath:self.sendFile];
         if (self.fileHandle == nil) {
             [sock disconnect];
             return;
