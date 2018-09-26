@@ -7,22 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef NS_ENUM(NSInteger, PLFTPDataTransferType) {
-    PLFTPDataTransferType_MLSD,
-    PLFTPDataTransferType_STOR
-};
+#import "PLFTPClientConfig.h"
 
 @interface PLFTPClientDataTransfer : NSObject
 
 @property (nonatomic, readonly) NSString * host;
 @property (nonatomic, readonly) NSUInteger port;
-@property (nonatomic, readonly) PLFTPDataTransferType type;
+@property (nonatomic, readonly) PLFTPClientEnumCommand command;
 
 @property (nonatomic, copy) void (^progressBlock) (float progress, PLFTPClientDataTransfer * transfer);
 @property (nonatomic, copy) void (^completeBlock) (NSError * error, NSData * data, PLFTPClientDataTransfer * transfer);
     
-- (instancetype)initWithHost:(NSString *)host pasvPort:(NSUInteger)pasvPort transferType:(PLFTPDataTransferType)transferType;
+- (instancetype)initWithHost:(NSString *)host pasvPort:(NSUInteger)pasvPort command:(PLFTPClientEnumCommand)command;
     
 - (void)startTransfer;
 - (void)stopTransfer;

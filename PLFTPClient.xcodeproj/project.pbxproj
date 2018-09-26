@@ -46,6 +46,7 @@
 		51BB4C1E215149930024A318 /* NSData+PLCSTR.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+PLCSTR.m"; sourceTree = "<group>"; };
 		51BB4C2021514A5E0024A318 /* PLFTPLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFTPLog.h; sourceTree = "<group>"; };
 		51BB4C2121514A5E0024A318 /* PLFTPLog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLFTPLog.m; sourceTree = "<group>"; };
+		62D462E1215B98990090F5F9 /* PLFTPClientConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLFTPClientConfig.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				51BB4C0F215141410024A318 /* CocoaAsyncSocket */,
+				62D462E1215B98990090F5F9 /* PLFTPClientConfig.h */,
 				51BB4C1A215141560024A318 /* PLFTPClient.h */,
 				51BB4C1B215141560024A318 /* PLFTPClient.m */,
 				51AFEEBD2156A524007C7E3B /* PLFTPClientDataTransfer.h */,

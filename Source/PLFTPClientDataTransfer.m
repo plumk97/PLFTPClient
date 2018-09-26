@@ -23,15 +23,15 @@
 @implementation PLFTPClientDataTransfer
 @synthesize host = _host;
 @synthesize port = _port;
-@synthesize type = _type;
+@synthesize command = _command;
     
-- (instancetype)initWithHost:(NSString *)host pasvPort:(NSUInteger)pasvPort transferType:(PLFTPDataTransferType)transferType {
+- (instancetype)initWithHost:(NSString *)host pasvPort:(NSUInteger)pasvPort command:(PLFTPClientEnumCommand)command {
     
     self = [super init];
     if (self) {
         _host = [host copy];
         _port = pasvPort;
-        _type = transferType;
+        _command = command;
         
         _mData = [[NSMutableData alloc] init];
         _socketDelegateQueue = dispatch_queue_create(NULL, NULL);
@@ -66,7 +66,7 @@
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
     [sock readDataWithTimeout:-1 tag:0];
     
-    if (self.sendFile && self.type == PLFTPDataTransferType_STOR) {
+    if (self.sendFile && self.command == PLFTPClientEnumCommand_STOR) {
         self.fileHandle = [NSFileHandle fileHandleForReadingAtPath:self.sendFile];
         if (self.fileHandle == nil) {
             [sock disconnect];
@@ -75,19 +75,19 @@
         self.fileSize = [self.fileHandle seekToEndOfFile];
         [self.fileHandle seekToFileOffset:0];
         
-        NSData * data = [self.fileHandle readDataOfLength:512];
+        NSData * data = [self.fileHandle readDataOfLength:65535];
         [sock writeData:data withTimeout:20 tag:0];
         
     }
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
-    if (self.type == PLFTPDataTransferType_STOR) {
+    if (self.command == PLFTPClientEnumCommand_STOR) {
         if (self.progressBlock) {
             self.progressBlock(MIN(1.0, [self.fileHandle offsetInFile] / (self.fileSize * 1.0)), self);
         }
         
-        NSData * data = [self.fileHandle readDataOfLength:512];
+        NSData * data = [self.fileHandle readDataOfLength:65535];
         if (data.length <= 0) {
             [sock disconnect];
             return;

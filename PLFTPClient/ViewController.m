@@ -28,10 +28,8 @@
     NSLog(@"%@", error);
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.ftpclient sendCommand:PLFTPClientEnumCommand_CWD content:@"123"];
-    [self.ftpclient sendCommand:PLFTPClientEnumCommand_MLSD content:nil];
-    [self.ftpclient sendCommand:PLFTPClientEnumCommand_STOR content:@"/Users/AQY/Downloads/PP 下载/应用/Play Magnus - Chess/Payload/MWPlayMiOS.zip"];
-    [self.ftpclient sendCommand:PLFTPClientEnumCommand_MLSD content:nil];
+    [self.ftpclient sendCommand:PLFTPClientEnumCommand_RETR content:@"安安.ipa"];
+//    [self.ftpclient sendCommand:PLFTPClientEnumCommand_SIZE content:@"安安.ipa"];
 }
 
 // MARK: - PLFTPClientDelegate
@@ -48,26 +46,22 @@
     NSLog(@"login: %d: %d", isSucceed, statusCode);
 }
 
-- (void)ftpclient:(PLFTPClient *)client completeCommand:(PLFTPClientCommand *)command {
-    NSLog(@"%@", command);
-}
-
-- (void)ftpclient:(PLFTPClient *)client transferingProgress:(float)progress transferType:(PLFTPDataTransferType)transferType {
+- (void)ftpclient:(PLFTPClient *)client transferingProgress:(float)progress command:(PLFTPClientEnumCommand)command {
     printf("transfering: %f\n", progress);
 }
 
-- (void)ftpclient:(PLFTPClient *)client transferredData:(NSData *)data transferType:(PLFTPDataTransferType)transferType error:(NSError *)error {
+- (void)ftpclient:(PLFTPClient *)client transferredData:(NSData *)data command:(PLFTPClientEnumCommand)command error:(NSError *)error {
     
     if (error) {
         NSLog(@"%@", error);
     }
-    switch (transferType) {
-        case PLFTPDataTransferType_MLSD: {
+    switch (command) {
+        case PLFTPClientEnumCommand_MLSD: {
             NSString * str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             PLFTPLog(@"%@", str);
         }
             break;
-        case PLFTPDataTransferType_STOR: {
+        case PLFTPClientEnumCommand_STOR: {
             PLFTPLog(@"上传完成");
         }
             break;

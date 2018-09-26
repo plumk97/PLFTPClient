@@ -9,38 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PLFTPClientDataTransfer.h"
 #import "PLFTPLog.h"
-
-/**
- commands
- REF: https://zh.wikipedia.org/wiki/FTP%E5%91%BD%E4%BB%A4%E5%88%97%E8%A1%A8
- - PLFTPClientEnumCommand_MLSD:
- - PLFTPClientEnumCommand_CWD:
- - PLFTPClientEnumCommand_CDUP:
- - PLFTPClientEnumCommand_PWD:
- - PLFTPClientEnumCommand_DELE:
- - PLFTPClientEnumCommand_RMD:
- - PLFTPClientEnumCommand_MKD:
- - PLFTPClientEnumCommand_STOR:
- - PLFTPClientEnumCommand_SIZE:
- - PLFTPClientEnumCommand_QUIT:
- */
-typedef NS_ENUM(NSInteger, PLFTPClientEnumCommand) {
-    PLFTPClientEnumCommand_TYPE,
-    PLFTPClientEnumCommand_PASS,
-    PLFTPClientEnumCommand_PASV,
-    PLFTPClientEnumCommand_USER,
-    PLFTPClientEnumCommand_OPTS,
-    PLFTPClientEnumCommand_MLSD,
-    PLFTPClientEnumCommand_CWD,
-    PLFTPClientEnumCommand_CDUP,
-    PLFTPClientEnumCommand_PWD,
-    PLFTPClientEnumCommand_DELE,
-    PLFTPClientEnumCommand_RMD,
-    PLFTPClientEnumCommand_MKD,
-    PLFTPClientEnumCommand_STOR,
-    PLFTPClientEnumCommand_SIZE,
-    PLFTPClientEnumCommand_QUIT
-};
+#import "PLFTPClientConfig.h"
 
 @interface PLFTPClientCommand : NSObject
 @property (nonatomic, assign, readonly) PLFTPClientEnumCommand command;
@@ -132,17 +101,17 @@ typedef NS_ENUM(NSInteger, PLFTPClientEnumCommand) {
 
  @param client PLFTPClient
  @param progress 0 ..< 1
- @param transferType 传输类型
+ @param command 传输类型
  */
-- (void)ftpclient:(PLFTPClient *)client transferingProgress:(float)progress transferType:(PLFTPDataTransferType)transferType;
+- (void)ftpclient:(PLFTPClient *)client transferingProgress:(float)progress command:(PLFTPClientEnumCommand)command;
 
 /**
  数据传输完成
 
  @param client PLFTPClient
  @param data 响应数据 上传文件为空
- @param transferType 传输类型
+ @param command 传输类型
  @param error NSError
  */
-- (void)ftpclient:(PLFTPClient *)client transferredData:(NSData *)data transferType:(PLFTPDataTransferType)transferType error:(NSError *)error;
+- (void)ftpclient:(PLFTPClient *)client transferredData:(NSData *)data command:(PLFTPClientEnumCommand)command error:(NSError *)error;
 @end

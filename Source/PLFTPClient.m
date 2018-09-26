@@ -59,10 +59,14 @@
             return @"MKD";
         case PLFTPClientEnumCommand_STOR:
             return @"STOR";
+        case PLFTPClientEnumCommand_RETR:
+            return @"RETR";
         case PLFTPClientEnumCommand_SIZE:
             return @"SIZE";
         case PLFTPClientEnumCommand_QUIT:
             return @"QUIT";
+        case PLFTPClientEnumCommand_STAT:
+            return @"STAT";
         default:
             break;
     }
@@ -169,7 +173,8 @@ isLogined = _isLogined;
         }
         
         if (command == PLFTPClientEnumCommand_MLSD ||
-            command == PLFTPClientEnumCommand_STOR) {
+            command == PLFTPClientEnumCommand_STOR ||
+            command == PLFTPClientEnumCommand_RETR) {
             [self sendCommand:PLFTPClientEnumCommand_PASV content:nil];
         }
         
@@ -279,30 +284,23 @@ isLogined = _isLogined;
                 NSUInteger port = [[parts objectAtIndex:parts.count - 2] integerValue] * 256 + [[parts objectAtIndex:parts.count - 1] integerValue];
                 
                 if (self.commandQueues.count < 2) {
-                    // 只发送了PASV命名 没有后续
+                    // 只发送了PASV命令 没有后续
                     break;
                 }
                 
                 PLFTPClientCommand * nextCommand = [self.commandQueues objectAtIndex:1];
                 
-                PLFTPDataTransferType transferType = PLFTPDataTransferType_MLSD;
-                if (nextCommand.command == PLFTPClientEnumCommand_MLSD) {
-                    transferType = PLFTPDataTransferType_MLSD;
-                } else if (nextCommand.command == PLFTPClientEnumCommand_STOR) {
-                    transferType = PLFTPDataTransferType_STOR;
-                }
+                PLFTPClientDataTransfer * transfer = [[PLFTPClientDataTransfer alloc] initWithHost:self.host pasvPort:port command:nextCommand.command];
                 
-                PLFTPClientDataTransfer * transfer = [[PLFTPClientDataTransfer alloc] initWithHost:self.host pasvPort:port transferType:transferType];
-                
-                if (transferType == PLFTPDataTransferType_STOR) {
+                if (nextCommand.command == PLFTPClientEnumCommand_STOR) {
                     transfer.sendFile = nextCommand.content;
                 }
                 
                 __weak __typeof(self) weakSelf = self;
                 [transfer setProgressBlock:^(float progress, PLFTPClientDataTransfer *transfer) {
                     __strong __typeof(weakSelf) self = weakSelf;
-                    if (self.delegate && [self.delegate respondsToSelector:@selector(ftpclient:transferingProgress:transferType:)]) {
-                        [self.delegate ftpclient:self transferingProgress:progress transferType:transfer.type];
+                    if (self.delegate && [self.delegate respondsToSelector:@selector(ftpclient:transferingProgress:command:)]) {
+                        [self.delegate ftpclient:self transferingProgress:progress command:transfer.command];
                     }
                 }];
                 
@@ -314,8 +312,8 @@ isLogined = _isLogined;
                     } else {
                         PLFTPLog(@"%@", error);
                     }
-                    if (self.delegate && [self.delegate respondsToSelector:@selector(ftpclient:transferredData:transferType:error:)]) {
-                        [self.delegate ftpclient:self transferredData:data transferType:transfer.type error:error];
+                    if (self.delegate && [self.delegate respondsToSelector:@selector(ftpclient:transferredData:command:error:)]) {
+                        [self.delegate ftpclient:self transferredData:data command:transfer.command error:error];
                     }
                     self.dataTransfer = nil;
                     [self nextCommand];
