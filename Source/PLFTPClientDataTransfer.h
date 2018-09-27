@@ -23,5 +23,7 @@
 - (void)startTransfer;
 - (void)stopTransfer;
 
+@property (nonatomic, assign) NSUInteger fileSize;
 @property (nonatomic, copy) NSString * sendFile;
+@property (nonatomic, copy) NSString * saveFile;
 @end

@@ -17,7 +17,6 @@
 @property (nonatomic, strong) GCDAsyncSocket * sockt;
 
 @property (nonatomic, strong) NSFileHandle * fileHandle;
-@property (nonatomic, assign) NSUInteger fileSize;
 @end
 
 @implementation PLFTPClientDataTransfer
@@ -67,6 +66,7 @@
     [sock readDataWithTimeout:-1 tag:0];
     
     if (self.sendFile && self.command == PLFTPClientEnumCommand_STOR) {
+        // 上传
         self.fileHandle = [NSFileHandle fileHandleForReadingAtPath:self.sendFile];
         if (self.fileHandle == nil) {
             [sock disconnect];
@@ -77,14 +77,21 @@
         
         NSData * data = [self.fileHandle readDataOfLength:PLFTPClientPerUploadSize];
         [sock writeData:data withTimeout:20 tag:0];
-        
+    } else if (self.saveFile && self.command == PLFTPClientEnumCommand_RETR) {
+        // 下载
+        BOOL isExists = [[NSFileManager defaultManager] fileExistsAtPath:self.saveFile];
+        if (isExists) {
+            [[NSFileManager defaultManager] removeItemAtPath:self.saveFile error:nil];
+        }
+        [[NSFileManager defaultManager] createFileAtPath:self.saveFile contents:nil attributes:nil];
+        self.fileHandle = [NSFileHandle fileHandleForWritingAtPath:self.saveFile];
     }
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag {
     if (self.command == PLFTPClientEnumCommand_STOR) {
         if (self.progressBlock) {
-            self.progressBlock(MIN(1.0, [self.fileHandle offsetInFile] / (self.fileSize * 1.0)), self);
+            self.progressBlock(MIN(1.0, [self.fileHandle offsetInFile] / (self.fileSize == 0 ? 1.0 : (self.fileSize * 1.0))), self);
         }
         
         NSData * data = [self.fileHandle readDataOfLength:PLFTPClientPerUploadSize];
@@ -97,11 +104,21 @@
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-    [self.mData appendData:data];
+    if (self.command == PLFTPClientEnumCommand_RETR) {
+        [self.fileHandle writeData:data];
+        if (self.progressBlock) {
+            self.progressBlock(MIN(1.0, [self.fileHandle offsetInFile] / (self.fileSize == 0 ? 1.0 : (self.fileSize * 1.0))), self);
+        }
+    } else {
+        [self.mData appendData:data];
+    }
     [sock readDataWithTimeout:-1 tag:tag + 1];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
+    [self.fileHandle closeFile];
+    self.fileHandle = nil;
+    
     if (self.completeBlock) {
         self.completeBlock(err, self.mData, self);
     }

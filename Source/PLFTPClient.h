@@ -11,13 +11,20 @@
 #import "PLFTPLog.h"
 #import "PLFTPClientConfig.h"
 
+
+typedef NSString * PLFTPExtParamKey NS_EXTENSIBLE_STRING_ENUM;
+
+FOUNDATION_EXPORT PLFTPExtParamKey PLFTPExtParamSaveFile;
 @interface PLFTPClientCommand : NSObject
 @property (nonatomic, assign, readonly) PLFTPClientEnumCommand command;
-@property (nonatomic, copy, readonly) NSString * content;
 
+@property (nonatomic, copy, readonly) NSString * content;
 @property (nonatomic, copy, readonly) NSString * responseContent;
 
+@property (nonatomic, copy, readonly) NSDictionary <PLFTPExtParamKey, id> * extparams;
+
 - (instancetype)initWithCommand:(PLFTPClientEnumCommand)command content:(NSString *)content;
+- (instancetype)initWithCommand:(PLFTPClientEnumCommand)command content:(NSString *)content extparams:(NSDictionary <PLFTPExtParamKey, id> *)extparams;
 @end
 
 
@@ -64,6 +71,7 @@
  @param content NSString
  */
 - (void)sendCommand:(PLFTPClientEnumCommand)command content:(NSString *)content;
+- (void)sendCommand:(PLFTPClientEnumCommand)command content:(NSString *)content extparams:(NSDictionary <PLFTPExtParamKey, id> *)extparams;
 @end
 
 

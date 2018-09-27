@@ -11,6 +11,7 @@
 #import "GCDAsyncSocket.h"
 #import "NSData+PLCSTR.h"
 
+PLFTPExtParamKey PLFTPExtParamSaveFile = @"PLFTPExtParamSaveFile";
 @interface PLFTPClientCommand ()
 @property (nonatomic, weak) PLFTPClient * client;
 @end
@@ -18,11 +19,18 @@
 @synthesize command = _command;
 @synthesize content = _content;
 @synthesize responseContent = _responseContent;
+@synthesize extparams = _extparams;
+
 - (instancetype)initWithCommand:(PLFTPClientEnumCommand)command content:(NSString *)content {
+    return [self initWithCommand:command content:content extparams:nil];
+}
+
+- (instancetype)initWithCommand:(PLFTPClientEnumCommand)command content:(NSString *)content extparams:(NSDictionary <PLFTPExtParamKey, id> *)extparams {
     self = [super init];
     if (self) {
         _command = command;
         _content = [content copy];
+        _extparams = [extparams copy];
     }
     return self;
 }
@@ -163,6 +171,11 @@ isLogined = _isLogined;
  @param content NSString
  */
 - (void)sendCommand:(PLFTPClientEnumCommand)command content:(NSString *)content {
+    [self sendCommand:command content:content extparams:nil];
+}
+
+- (void)sendCommand:(PLFTPClientEnumCommand)command content:(NSString *)content extparams:(NSDictionary <PLFTPExtParamKey, id> *)extparams {
+    
     if (self.commSocket.isConnected) {
         
         if (command == PLFTPClientEnumCommand_STOR) {
@@ -174,13 +187,17 @@ isLogined = _isLogined;
             }
         }
         
+        if (command == PLFTPClientEnumCommand_RETR) {
+            [self sendCommand:PLFTPClientEnumCommand_SIZE content:content extparams:nil];
+        }
+        
         if (command == PLFTPClientEnumCommand_MLSD ||
             command == PLFTPClientEnumCommand_STOR ||
             command == PLFTPClientEnumCommand_RETR) {
-            [self sendCommand:PLFTPClientEnumCommand_PASV content:nil];
+            [self sendCommand:PLFTPClientEnumCommand_PASV content:nil extparams:nil];
         }
         
-        PLFTPClientCommand * c = [[PLFTPClientCommand alloc] initWithCommand:command content:content];
+        PLFTPClientCommand * c = [[PLFTPClientCommand alloc] initWithCommand:command content:content extparams:extparams];
         [self.commandQueues addObject:c];
         [self executeCommand];
     }
@@ -303,9 +320,16 @@ isLogined = _isLogined;
                 PLFTPClientCommand * nextCommand = [self.commandQueues objectAtIndex:1];
                 
                 PLFTPClientDataTransfer * transfer = [[PLFTPClientDataTransfer alloc] initWithHost:self.host pasvPort:port command:nextCommand.command];
-                
-                if (nextCommand.command == PLFTPClientEnumCommand_STOR) {
-                    transfer.sendFile = nextCommand.content;
+                transfer.fileSize = self.fileSize;
+                switch (nextCommand.command) {
+                    case PLFTPClientEnumCommand_STOR:
+                        transfer.sendFile = nextCommand.content;
+                        break;
+                    case PLFTPClientEnumCommand_RETR:
+                        transfer.saveFile = [nextCommand.extparams objectForKey:PLFTPExtParamSaveFile];
+                        break;
+                    default:
+                        break;
                 }
                 
                 __weak __typeof(self) weakSelf = self;
@@ -330,6 +354,7 @@ isLogined = _isLogined;
                     self.dataTransfer = nil;
                     [self nextCommand];
                 }];
+                
                 self.dataTransfer = transfer;
                 [self nextCommand];
                 isAutoNext = NO;
